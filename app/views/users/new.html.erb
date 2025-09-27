@@ -1,0 +1,74 @@
+<body class="bg-[#1A1A1D] ">
+<div class="flex justify-center w-full bg-[#1A1A1D] text-[#EDF2F4] min-h-screen  items-center">
+  <%= form_with model: @user, class: "bg-[#2B2D42] p-8 rounded-2xl flex flex-col gap-4 w-full max-w-md" do |form| %>
+
+    <h1 class="text-4xl font-bold text-center asimovian-regular text-[#FF4500]">Registrar</h1>
+
+    <%# Nome %>
+    <div class="flex flex-col gap-1">
+      <%= form.label :name, "Nome", class: "asimovian-regular text-[#FF4500]" %>
+      <div class="flex items-center border rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500">
+        <%# Ícone UserRound em SVG %>
+        <svg class="w-5 h-5 text-[#FF4500] mr-2" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+        <%= form.text_field :name, placeholder: "Nome", class: "flex-1 bg-none border-none outline-none px-2 text-white" %>
+      </div>
+    </div>
+
+    <%# Email %>
+    <div class="flex flex-col gap-1">
+      <%= form.label :email_address, "Email", class: "asimovian-regular text-[#FF4500]" %>
+      <div class="flex items-center border rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500">
+        <%# Ícone Mail em SVG %>
+        <svg class="w-5 h-5 text-[#FF4500] mr-2" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        <%= form.email_field :email_address, placeholder: "exemplo@mail.com", class: "flex-1 bg-none border-none outline-none px-2 text-white" %>
+      </div>
+    </div>
+
+    <%# Senha %>
+    <div class="flex flex-col gap-1">
+      <%= form.label :password, "Senha", class: "asimovian-regular text-[#FF4500]" %>
+      <div class="flex items-center border rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500">
+        <%# Ícone LockKeyhole em SVG %>
+        <svg class="w-5 h-5 text-[#FF4500] mr-2" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 17a2 2 0 0 0 2-2v-2a2 2 0 1 0-4 0v2a2 2 0 0 0 2 2zm6-7V8c0-3.31-2.69-6-6-6S6 4.69 6 8v2H4v14h16V10h-2zm-8-2a4 4 0 1 1 8 0v2H10V8z"/>
+        </svg>
+        <%= form.password_field :password, placeholder: "Senha", class: "flex-1 bg-none border-none outline-none px-2 text-white" %>
+      </div>
+    </div>
+
+    <%# Botão Registrar %>
+    <%= form.submit "Registrar", class: "w-full py-3 rounded asimovian-regular hover:cursor-pointer bg-[#FF4500] hover:bg-[#8D99AE] transition mt-2" %>
+
+    <%# Link para login %>
+    <div class="flex items-center justify-end mt-2">
+      <%= link_to "Já possui uma conta? Clique aqui.", new_session_path, class: "hover:cursor-pointer underline text-[#FF4500]" %>
+    </div>
+
+    <%# Mensagens de erro %>
+    <% if @user.errors.any? %>
+      <div class="text-red-500 asimovian-regular text-lg mt-2">
+        <ul>
+          <% @user.errors.each do |attribute, message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if flash[:alert] %>
+      <p style="color: red;"><%= flash[:alert] %></p>
+    <% end %>
+
+    <%# Mensagem de sucesso (opcional) %>
+    <% if flash[:notice] %>
+      <p class="text-green-500 asimovian-regular text-lg mt-2"><%= flash[:notice] %></p>
+    <% end %>
+
+  <% end %>
+</div>
+
+</body>
+

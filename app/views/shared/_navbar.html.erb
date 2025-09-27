@@ -1,0 +1,93 @@
+<nav class="bg-[#FF4500] shadow-md relative sticky">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.544.0/dist/lucide.min.js"></script>
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          lucide.replace({width: 24, height: 24});
+      });
+  </script>
+  <ul class="flex list-none gap-6 m-0 p-0 overflow-hidden w-full h-16 items-center">
+    <!-- Logo -->
+    <li class="flex">
+      <%= link_to "AnimesFlix",  authenticated? ? animes_path : root_path, class: "flex items-center asimovian-regular h-full px-4 text-[#EDF2F4] text-3xl cursor-pointer transition-colors" %>
+    </li>
+
+
+    <!-- News -->
+    <li class="flex h-full">
+      <a href="#news" class="flex items-center h-full px-4 text-white transition-colors hover:bg-[#111111]">News</a>
+    </li>
+
+    <!-- Contact -->
+    <li class="flex h-full">
+      <a href="/home/contact" class="flex items-center h-full px-4 text-white transition-colors hover:bg-[#111111]">Contact</a>
+    </li>
+    <!-- Search -->
+    <% if  authenticated? && current_page?(animes_path) %>
+      <li data-controller="anime">
+        <div class="relative w-60 hidden md:block">
+          <input
+            type="text"
+            data-anime-target="searchInput"
+            placeholder="Pesquisar..."
+            class="w-full h-10 pl-4 pr-12 rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500"
+          >
+          <button
+            data-action="click->anime#search"
+            class="absolute right-1 top-1 bottom-1 hover:cursor-pointer hover:bg-gray-500 w-8 flex items-center justify-center rounded-full bg-orange-500 text-white hover:bg-orange-600 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke-width="2" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 105.25 5.25a7.5 7.5 0 0011.4 11.4z"/>
+            </svg>
+          </button>
+        </div>
+
+
+      </li>
+    <% end %>
+    <!-- Menu do Usuário -->
+    <li class="flex ml-auto relative h-full" data-controller="dropdown">
+      <a href="#"
+         class="flex items-center h-full px-4 text-white transition-colors hover:bg-[#111111]"
+         data-action="click->dropdown#toggle">
+        <i data-lucide="user" class="h-6 w-6"></i>
+      </a>
+
+      <!-- Dropdown menu -->
+
+      <div data-dropdown-target="menu"
+           class="fixed right-0 top-16 bg-[#151515] text-gray-400 shadow-lg w-56 rounded-md z-50 transition-all duration-200 ease-in-out transform scale-95 opacity-0 origin-top-right">
+        <ul>
+          <% if authenticated? %>
+            <%= button_to session_path, method: :delete, class: "px-4 w-full py-2 hover:text-white cursor-pointer flex items-center " do %>
+              <i data-lucide="log-out" class="h-5 w-5 mr-1"></i>
+              Sair
+            <% end %>
+
+
+          <% else %>
+            <div class="flex flex-col gap-1 ">
+
+              <li class="cursor-pointer">
+                <%= link_to new_users_path, class: "block  hover:text-white hover:bg-gray-700 p-2" do %>
+                  <span class="block ">Cadastre-se</span>
+                  <span class="block text-sm text-gray-400 ">Cadastre-se de graça ou torne-se premium.</span>
+                <% end %>
+              </li>
+              <li class="cursor-pointer">
+                <%= link_to new_session_path, class: "block  hover:text-white hover:bg-gray-700 p-2" do %>
+                  <span class="block ">Login</span>
+                  <span class="block text-sm text-gray-400 ">
+                    Já é membro da AnimesFlix? Seja bem-vindo.
+                </span>
+                <% end %>
+              </li>
+            </div>
+
+
+          <% end %>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</nav>
